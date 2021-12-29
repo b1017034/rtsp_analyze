@@ -16,14 +16,14 @@ int main() {
   std::string option = rtsp.cmdOption(host, 8554, 0);
   std::string optionRes = sendWithResponse(sock, option);
 
-  std::string describe = rtsp.cmdDescribe("localhost:8554/sample_hd.mkv", 1);
+  std::string describe = rtsp.cmdDescribe(host, port, media, 1);
   std::string describeRes = sendWithResponse(sock, describe);
 
-  std::string setup = rtsp.cmdSetup("localhost:8554/sample_hd.mkv", 2);
+  std::string setup = rtsp.cmdSetup(host, port, media, 2);
   std::string setupRes = sendWithResponse(sock, setup);
   std::string session = rtsp.getSession(setupRes);
 
-  std::string play = rtsp.cmdPlay("localhost:8554/sample_hd.mkv", 3, session);
+  std::string play = rtsp.cmdPlay(host, port, media, 3, session);
   std::string playRes = sendWithResponse(sock, play);
   std::cout << playRes << std::endl;
   while (true) {
