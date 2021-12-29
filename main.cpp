@@ -8,9 +8,12 @@ std::string sendWithResponse(int sock, std::string sendMsg);
 std::vector<unsigned char> receive(int sock);
 
 int main() {
-  int sock = Network::tcpConnect("localhost", 8554);
+  std::string host = "localhost";
+  int port = 8554;
+  std::string media = "sample.mkv";
+  int sock = Network::tcpConnect(host, 8554);
   RtspManager rtsp = RtspManager();
-  std::string option = rtsp.cmdOption("localhost", 8554, 0);
+  std::string option = rtsp.cmdOption(host, 8554, 0);
   std::string optionRes = sendWithResponse(sock, option);
 
   std::string describe = rtsp.cmdDescribe("localhost:8554/sample_hd.mkv", 1);

@@ -14,12 +14,12 @@ std::string RtspManager::cmdOption(const std::string& host, int port, int seq) {
   return Util::format(this->commands.OPTIONS, host.c_str(), port, seq);
 }
 
-std::string RtspManager::cmdDescribe(const std::string& url, int seq) {
-  return Util::format(this->commands.DESCRIBE, url.c_str(), seq);
+std::string RtspManager::cmdDescribe(const std::string &host, int port, const std::string &media, int seq) {
+  return Util::format(this->commands.DESCRIBE, host.c_str(), port, media.c_str(), seq);
 }
 
-std::string RtspManager::cmdSetup(const std::string &url, int seq) {
-  return Util::format(this->commands.SETUP, url.c_str(), seq);
+std::string RtspManager::cmdSetup(const std::string &host, int port, const std::string &media, int seq) {
+  return Util::format(this->commands.SETUP, host.c_str(), port, media.c_str(), seq);
 }
 
 std::string RtspManager::getSession(const std::string &setupRes) {
@@ -30,8 +30,8 @@ std::string RtspManager::getSession(const std::string &setupRes) {
   return setupRes.substr(posLeft + session.length(), posRight - (posLeft + session.length()));
 }
 
-std::string RtspManager::cmdPlay(const std::string &url, int seq, const std::string &session) {
-  return Util::format(this->commands.PLAY, url.c_str(), seq, session.c_str());
+std::string RtspManager::cmdPlay(const std::string &host, int port, const std::string &media, int seq, const std::string &session) {
+  return Util::format(this->commands.PLAY, host.c_str(), port, media.c_str(), seq, session.c_str());
 }
 
 void RtspManager::decode(std::vector<unsigned char> buf) {

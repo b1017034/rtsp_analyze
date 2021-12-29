@@ -1,1 +1,0 @@
-/usr/bin/c++  -g   CMakeFiles/rtsp_socket_relay-exe.dir/main.cpp.o  -o rtsp_socket_relay-exe  librtsp_socket_relay-lib.a 
