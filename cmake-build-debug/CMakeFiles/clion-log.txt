@@ -1,0 +1,4 @@
+C:\WINDOWS\system32\wsl.exe --distribution Ubuntu-20.04 --exec /bin/bash -c "export CLION_IDE=TRUE && export JETBRAINS_IDE=TRUE && cd /home/alpine/Documents/rtsp_socket_relay/cmake-build-debug && /usr/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G 'CodeBlocks - Unix Makefiles' /home/alpine/Documents/rtsp_socket_relay"
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/alpine/Documents/rtsp_socket_relay/cmake-build-debug

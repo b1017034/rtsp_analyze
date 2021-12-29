@@ -1,0 +1,4 @@
+/home/alpine/Documents/rtsp_socket_relay/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/alpine/Documents/rtsp_socket_relay/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/alpine/Documents/rtsp_socket_relay/cmake-build-debug/CMakeFiles/rtsp_socket_relay-exe.dir
+/home/alpine/Documents/rtsp_socket_relay/cmake-build-debug/CMakeFiles/rtsp_socket_relay-lib.dir

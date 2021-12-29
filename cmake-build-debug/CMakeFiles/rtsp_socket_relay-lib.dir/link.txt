@@ -1,0 +1,2 @@
+/usr/bin/ar qc librtsp_socket_relay-lib.a  CMakeFiles/rtsp_socket_relay-lib.dir/RtspManager.cpp.o CMakeFiles/rtsp_socket_relay-lib.dir/RtpManager.cpp.o CMakeFiles/rtsp_socket_relay-lib.dir/Util.cpp.o CMakeFiles/rtsp_socket_relay-lib.dir/util/Network.cpp.o CMakeFiles/rtsp_socket_relay-lib.dir/RtcpManager.cpp.o
+/usr/bin/ranlib librtsp_socket_relay-lib.a
