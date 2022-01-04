@@ -70,6 +70,6 @@ void RtpManager::decode(std::vector<unsigned char> buf, RtcpManager rtcpManager)
     auto lastNTP = senderTime.tv_sec + ((double)senderTime.tv_usec / 1e+6);
     auto nowNTP = now.tv_sec + ((double)now.tv_usec / 1e+6);
     auto delay = nowNTP - (lastNTP + tsDiff / 90000.0);
-    this->delayFile << "delay: " << delay << std::endl;
+    this->delayFile << "delay: " << delay << " timestamp: " << rtp.timestamp << std::endl;
   }
 }
