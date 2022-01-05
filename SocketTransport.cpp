@@ -11,6 +11,8 @@
 #include <unistd.h>
 #include <cstring>
 
+#define BUFFER_SIZE ( 1024 * 16  )
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 void SocketTransport::start(const std::string& host, int srcPort, int dstPort) {
   this->dstSocket = createDstSocket(dstPort);
   int connect;
@@ -90,7 +92,68 @@ void SocketTransport::rtspRelay(void *rtspSocketVoid) {
   std::cout << "hello" << std::endl;
 }
 
+//void *socketRelay(int file[]){
+//  int connectedSocket = file[0];
+//  int clientSock = file[1];
+//
+//  int files_in[3] = {connectedSocket, clientSock, 0};
+//  pthread_t   thread_id1, thread_id2;
+//  int         status;
+//
+//  status = pthread_create(&thread_id1,nullptr,(void *(*)(void *))readToWrite, files_in);
+//  if(status!=0){
+//    fprintf(stderr,"pthread_create : %s",strerror(status));
+//    exit(EXIT_FAILURE);
+//  }
+//
+//  int files_out[3] = {clientSock, connectedSocket, 2};
+//  status = pthread_create(&thread_id2,nullptr,(void *(*)(void *))readToWrite, files_out);
+//  if(status!=0){
+//    fprintf(stderr,"pthread_create : %s",strerror(status));
+//    exit(EXIT_FAILURE);
+//  }
+//
+//  pthread_join(thread_id2,nullptr);
+//  pthread_cancel(thread_id1);
+//
+//  close(connectedSocket);
+//  close(clientSock);
+//
+//  return file;
+//}
+
 SocketTransport::~SocketTransport() {
   close(this->dstSocket);
   close(this->srcSocket);
 }
+
+//void *SocketTransport::readToWrite(int *file) {
+//  char buffer[BUFFER_SIZE];
+//
+//  ssize_t read_size;
+//  int in_file = file[0];
+//  int out_file = file[1];
+//  bool readRTSP = file[2];
+//  RTSP rtsp(true);
+//
+//  while(true){
+//    read_size = read(in_file, buffer, sizeof(buffer));
+//    if (read_size == 0){
+//      break; //EOF
+//    }
+//    //close
+//    if(read_size < 0){
+//      break;
+//    }
+//
+//    pthread_mutex_lock( &mutex );
+//    if(readRTSP) {
+////      std::vector<unsigned char> vectorVBuffer(buffer, buffer + read_size);
+////      rtsp.decode(vectorVBuffer, read_size);
+//    }
+//    pthread_mutex_unlock( &mutex );
+//
+//    write(out_file, buffer, (unsigned int) read_size);
+//  }
+//  return (file);
+//}

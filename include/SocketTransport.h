@@ -19,6 +19,7 @@ public:
   static int createSrcSocket(const std::string& srcHost, int srcPort);
   int createDstSocket(int dstPort) const;
   static void rtspRelay(void *rtspSocketVoid);
+  static void *readToWrite(int file[]);
 
 private:
   int dstSocket;
