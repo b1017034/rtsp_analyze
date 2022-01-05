@@ -3,6 +3,7 @@
 //
 
 #include "include/SocketTransport.h"
+#include "include/RtspManager.h"
 #include <sys/socket.h>
 #include <pthread.h>
 #include <sys/types.h>
@@ -29,9 +30,9 @@ void SocketTransport::start(const std::string& host, int srcPort, int dstPort) {
     }
     this->srcSocket = createSrcSocket(host, srcPort);
 
-    RtspSocket rtspSocket{};
-    rtspSocket.src = this->srcSocket;
-    rtspSocket.dst = this->dstSocket;
+    int rtspSocket[2];
+    rtspSocket[0] = this->srcSocket;
+    rtspSocket[1] = this->dstSocket;
     if (pthread_create(&rtspThread, nullptr, (void *(*)(void *)) rtspRelay, (void *) &rtspSocket) != 0) {
       std::cout << "[ERR]: Failed Create Thread" << std::endl;
       exit(EXIT_FAILURE);
@@ -87,73 +88,66 @@ int SocketTransport::createDstSocket(int dstPort) const {
   return sock;
 }
 
-void SocketTransport::rtspRelay(void *rtspSocketVoid) {
-  auto *rtspSocket = static_cast<RtspSocket *>(rtspSocketVoid);
-  std::cout << "hello" << std::endl;
+void* SocketTransport::rtspRelay(int sock[]) {
+  int srcSock = sock[0];
+  int dstSock = sock[1];
+  int filesIN[3] = {srcSock, dstSock, 0};
+  int filesOUT[3] = {dstSock, srcSock, 1};
+  pthread_t pthreadIN, pthreadOUT;
+
+  int status;
+  status = pthread_create(&pthreadIN ,nullptr,(void *(*)(void *))readToWrite, filesIN);
+  if(status!=0){
+    fprintf(stderr,"pthread_create : %s",strerror(status));
+    exit(EXIT_FAILURE);
+  }
+  status = pthread_create(&pthreadOUT ,nullptr,(void *(*)(void *))readToWrite, filesOUT);
+  if(status!=0){
+    fprintf(stderr,"pthread_create : %s",strerror(status));
+    exit(EXIT_FAILURE);
+  }
+
+  pthread_join(pthreadOUT, nullptr);
+  pthread_cancel(pthreadIN);
+
+  close(dstSock);
+  close(srcSock);
+
+  return sock;
 }
 
-//void *socketRelay(int file[]){
-//  int connectedSocket = file[0];
-//  int clientSock = file[1];
-//
-//  int files_in[3] = {connectedSocket, clientSock, 0};
-//  pthread_t   thread_id1, thread_id2;
-//  int         status;
-//
-//  status = pthread_create(&thread_id1,nullptr,(void *(*)(void *))readToWrite, files_in);
-//  if(status!=0){
-//    fprintf(stderr,"pthread_create : %s",strerror(status));
-//    exit(EXIT_FAILURE);
-//  }
-//
-//  int files_out[3] = {clientSock, connectedSocket, 2};
-//  status = pthread_create(&thread_id2,nullptr,(void *(*)(void *))readToWrite, files_out);
-//  if(status!=0){
-//    fprintf(stderr,"pthread_create : %s",strerror(status));
-//    exit(EXIT_FAILURE);
-//  }
-//
-//  pthread_join(thread_id2,nullptr);
-//  pthread_cancel(thread_id1);
-//
-//  close(connectedSocket);
-//  close(clientSock);
-//
-//  return file;
-//}
+void* SocketTransport::readToWrite(int *file) {
+  char buffer[BUFFER_SIZE];
+
+  ssize_t read_size;
+  int in_file = file[0];
+  int out_file = file[1];
+  bool readRTSP = file[2];
+  RtspManager rtspManager;
+
+  while(true){
+    read_size = read(in_file, buffer, sizeof(buffer));
+    if (read_size == 0){
+      break; //EOF
+    }
+    //close
+    if(read_size < 0){
+      break;
+    }
+
+    pthread_mutex_lock( &mutex );
+    if(readRTSP) {
+//      std::vector<unsigned char> vectorVBuffer(buffer, buffer + read_size);
+//      rtsp.decode(vectorVBuffer, read_size);
+    }
+    pthread_mutex_unlock( &mutex );
+
+    write(out_file, buffer, (unsigned int) read_size);
+  }
+  return (file);
+}
 
 SocketTransport::~SocketTransport() {
   close(this->dstSocket);
   close(this->srcSocket);
 }
-
-//void *SocketTransport::readToWrite(int *file) {
-//  char buffer[BUFFER_SIZE];
-//
-//  ssize_t read_size;
-//  int in_file = file[0];
-//  int out_file = file[1];
-//  bool readRTSP = file[2];
-//  RTSP rtsp(true);
-//
-//  while(true){
-//    read_size = read(in_file, buffer, sizeof(buffer));
-//    if (read_size == 0){
-//      break; //EOF
-//    }
-//    //close
-//    if(read_size < 0){
-//      break;
-//    }
-//
-//    pthread_mutex_lock( &mutex );
-//    if(readRTSP) {
-////      std::vector<unsigned char> vectorVBuffer(buffer, buffer + read_size);
-////      rtsp.decode(vectorVBuffer, read_size);
-//    }
-//    pthread_mutex_unlock( &mutex );
-//
-//    write(out_file, buffer, (unsigned int) read_size);
-//  }
-//  return (file);
-//}

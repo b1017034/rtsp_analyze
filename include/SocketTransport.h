@@ -18,8 +18,8 @@ public:
   void start(const std::string& host, int srcPort, int dstPort);
   static int createSrcSocket(const std::string& srcHost, int srcPort);
   int createDstSocket(int dstPort) const;
-  static void rtspRelay(void *rtspSocketVoid);
-  static void *readToWrite(int file[]);
+  static void* rtspRelay(int sock[]);
+  static void* readToWrite(int file[]);
 
 private:
   int dstSocket;
