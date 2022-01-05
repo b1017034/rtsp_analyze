@@ -7,6 +7,7 @@
     <generated>
       <config projectName="rtsp_socket_relay" targetName="rtsp_socket_relay-exe" />
       <config projectName="rtsp_socket_relay" targetName="rtsp_socket_relay-lib" />
+      <config projectName="rtsp_socket_relay" targetName="rtsp_socket_relay-test-exe" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -78,7 +79,7 @@
       <recent name="\\wsl$\Ubuntu-20.04\home\alpine\Documents\rtsp_socket_relay" />
     </key>
   </component>
-  <component name="RunManager" selected="CMake Application.rtsp_socket_relay-exe">
+  <component name="RunManager" selected="CMake Application.rtsp_socket_relay-test-exe">
     <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -94,9 +95,15 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="rtsp_socket_relay-test-exe" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rtsp_socket_relay" TARGET_NAME="rtsp_socket_relay-test-exe" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="rtsp_socket_relay" RUN_TARGET_NAME="rtsp_socket_relay-test-exe">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="CMake Application.rtsp_socket_relay-exe" />
       <item itemvalue="CMake Application.rtsp_socket_relay-lib" />
+      <item itemvalue="CMake Application.rtsp_socket_relay-test-exe" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -108,7 +115,7 @@
       <option name="presentableId" value="Default" />
       <updated>1640704662208</updated>
       <workItem from="1640704664702" duration="32134000" />
-      <workItem from="1641316633350" duration="568000" />
+      <workItem from="1641316633350" duration="8973000" />
     </task>
     <servers />
   </component>
