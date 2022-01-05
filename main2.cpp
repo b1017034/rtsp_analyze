@@ -5,6 +5,7 @@
 #include "./include/SocketTransport.h"
 
 #include "string"
+#include "iostream"
 #include "csignal"
 
 void signalHandler( int signal ){
@@ -17,6 +18,8 @@ int main() {
   std::string host = "127.0.0.1";
   int srcPort = 554;
   int dstPort = 8080;
+
+  std::cout << "transport: localhost:" << dstPort << " <-> " << host << ":" << srcPort << std::endl;
 
   signal( SIGINT, signalHandler );
   signal( SIGKILL, signalHandler );
